@@ -1,9 +1,13 @@
-# File.stream!("./input.txt")
-# |> Stream.map(&String.trim/1)
-# |> Stream.with_index()
-# |> Stream.map(fn {line, index} -> IO.puts("#{index + 1} #{line}") end)
-# |> Stream.run()
+gnomes =
+  File.read!(Path.expand("~/co/aoc-2022/01/input.txt"))
+  |> String.split("\n\n")
+  |> Enum.map(fn x -> String.split(x, "\n", trim: true) |> Enum.map(&String.to_integer/1) end)
+  |> Enum.map(&Enum.sum/1)
+  |> Enum.sort
+  |> Enum.reverse
 
-{:ok, file} = File.read(Path.expand("~/co/aoc-2022/01/input.txt"))
-lines = file |> String.split("\n") |> Enum.map(String.to_integer() / 1)
-IO.puts(lines)
+# 70698
+IO.inspect(Enum.max(gnomes))
+
+# 206643
+IO.inspect(Enum.sum(Enum.take(gnomes, 3)))
